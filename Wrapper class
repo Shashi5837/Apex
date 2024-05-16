@@ -1,0 +1,56 @@
+public class hospital{
+	public string HospitalName;
+	public string HospitalLoctaion;
+	
+	list<doctor> dct = new list<doctor>();
+	
+	public void getDoctor(string docName,string docSal,string docAge){
+		doctor dc =  new doctor(docName,docSal,docAge);
+		dct.add(dc);
+	}
+	
+	public void printDoc(){
+		for(doctor dct1 : dct){
+			system.print(dct1);
+		}
+	}
+	
+	private class doctor{
+		private string docName;
+		private string docSal;
+		private string docAge;
+		
+		doctor(string docName,string docSal,string docAge){
+			this.docName=docName;
+			this.docSal=docSal;
+			this.docAge=docAge;
+		}		
+	}		
+}
+
+public class AccountWrapperDemo(){
+	public static list<AccountWrapper> getAccAndCon(){
+		list<AccountWrapper> WrapList = new list<AccountWrapper>();
+		list<account> accList = [select id, Name ,(select id,FirstName,lastName from contacts)
+								from Account Limit 10];
+		if(!acclist.isEmpty()){
+			for(Account acc : accList){
+				WrapList.add(new AccountWrapper(acc, acc.contacts));
+			}
+		}
+		return WrapList;
+		
+	}
+	
+	public class AccountWrapper{
+		public Account accRecord {get;set;}
+		public list<contact> contactList {get;set;}
+		
+		public AccountWrapper(Account accRecord,list<contact> contactList){
+			this.accRecord=accRecord;
+			this.contactList=contactList;
+		}
+	}
+	
+}
+
